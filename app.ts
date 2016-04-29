@@ -28,6 +28,7 @@ class Article {
 
 @Component({
   selector: 'reddit-article',
+  inputs: ['article'],
   host: {
     class: 'row'
   },
@@ -102,15 +103,22 @@ class ArticleComponent {
         </form>
         
         <div class="ui grid posts">
-            <reddit-article></reddit-article>
+            <reddit-article *ngFor="#article of articles" [article]="article"></reddit-article>
         </div>
     `)
 })
 
 class RedditApp {
+    articles: Article[];
+    
     constructor() {
-       
+        this.articles = [ 
+            new Article('Angular2', 'http://angular.io', 10),
+            new Article('Fullstack', 'http://angular.io', 2), 
+            new Article('Angular Page', 'http://angular.io', 7),
+        ];
     }
+    
     addArticle(title: HTMLInputElement, link: HTMLInputElement): void {
         console.log(`Adding article title: ${title.value} and link: ${link.value}`);
     }
